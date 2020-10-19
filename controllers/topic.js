@@ -2,7 +2,10 @@ const Topic = require("../models/topic");
 const Question = require("../models/question");
 class TopicCtl {
   async find(ctx) {
-    const topics = await Topic.find();
+    let topics = [];
+    if (ctx.query.filter === "all") {
+      topics = await Topic.find();
+    }
     ctx.body = topics;
   }
 
@@ -68,8 +71,8 @@ class TopicCtl {
   }
 
   async delete(ctx) {
-    const questions = await Question.find({ topic: ctx.params.id });
-    if (questions.length !== 0) {
+    const topics = await Question.find({ topic: ctx.params.id });
+    if (topics.length !== 0) {
       ctx.body = {
         status: "fail",
         message: "该话题下有帖子，无法删除",

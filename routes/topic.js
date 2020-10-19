@@ -9,8 +9,9 @@ const {
   delete: del,
   checkOwner
 } = require("../controllers/topic");
-
-const { secret } = require("../conf");
+const dotenv = require("dotenv")
+dotenv.config()
+const secret  = process.env.TOKEN_SECRET;
 const auth = jwt({ secret });
 
 router.get("/", find);

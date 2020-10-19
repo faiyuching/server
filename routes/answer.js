@@ -9,10 +9,11 @@ const {
   delete: del,
   checkOwner,
   like,
-  unlike
+  unlike,
 } = require("../controllers/answer");
-
-const { secret } = require("../conf");
+const dotenv = require("dotenv");
+dotenv.config();
+const secret = process.env.TOKEN_SECRET;
 const auth = jwt({ secret });
 
 router.get("/", find);

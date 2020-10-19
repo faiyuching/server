@@ -1,8 +1,9 @@
 const jsonwebtoken = require("jsonwebtoken");
 const path = require("path");
 const User = require("../models/user");
-const { secret } = require("../conf");
 const bcrypt = require("bcrypt");
+const dotenv = require("dotenv")
+dotenv.config()
 
 class UserCtl {
   async find(ctx) {
@@ -163,7 +164,7 @@ class UserCtl {
       );
       if (match) {
         const { _id, username } = user;
-        const token = jsonwebtoken.sign({ _id, username }, secret, {
+        const token = jsonwebtoken.sign({ _id, username }, process.env.TOKEN_SECRET, {
           expiresIn: "1d",
         });
         ctx.body = {

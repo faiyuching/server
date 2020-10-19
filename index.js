@@ -7,11 +7,12 @@ const path = require("path");
 const koaStatic = require("koa-static");
 const parameter = require("koa-parameter");
 const mongoose = require("mongoose");
-const { connectionLocal } = require("./conf");
 const sendFile = require("koa-sendfile");
+const dotenv = require("dotenv")
+dotenv.config()
 
 mongoose.connect(
-  connectionLocal,
+  process.env.MONGO_URL,
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => {
     console.log("mongoose is running...");
@@ -47,6 +48,6 @@ app.use(
 app.use(parameter(app));
 routing(app);
 
-app.listen(8000, () => {
+app.listen(process.env.PORT, () => {
   console.log("server running...");
 });
