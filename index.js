@@ -22,12 +22,12 @@ mongoose.connection.on("error", console.error);
 mongoose.set("useFindAndModify", false);
 
 // app.use(koaStatic(path.resolve('build/index.html')))
-app.use(koaStatic(path.join(__dirname, "build")));
+app.use(koaStatic(path.join(__dirname, "public")));
 
-app.use(async function (ctx, next) {
-  await sendFile(ctx, path.join(__dirname, "build", "index.html"));
-  await next();
-});
+// app.use(async function (ctx, next) {
+//   await sendFile(ctx, path.join(__dirname, "build", "index.html"));
+//   await next();
+// });
 
 app.use(
   error({
@@ -39,7 +39,7 @@ app.use(
   koaBody({
     multipart: true,
     formidable: {
-      uploadDir: path.join(__dirname, "build", "uploads"),
+      uploadDir: path.join(__dirname, "public", "uploads"),
       keepExtensions: true,
     },
   })

@@ -22,7 +22,7 @@ const userSchema = new Schema(
       type: String,
       required: false,
       default:
-        "https://pic1.zhimg.com/80/v2-7248e3df3e65bb7f58a6f20da805b0b7_r.jpg",
+        "https://sm.ms/image/wsevuKLpGXHEIJ7",
     },
     following: {
       type: [{ type: Schema.Types.ObjectId, ref: "User" }],
