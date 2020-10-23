@@ -6,19 +6,36 @@ const mongoose = require("mongoose");
 class QuestionCtl {
   async find(ctx) {
     let questions = [];
-    if (ctx.query.filter !== "undefined" && ctx.query.id !== "undefined") {
-      if (ctx.query.filter === "topic") {
-        questions = await Question.find({ topic: ctx.query.id })
-          .populate("creator")
-          .sort({ createdAt: -1 });
-      }
-      if (ctx.query.filter === "creator") {
+    const filter = ctx.query.filter;
+    const sort = ctx.query.sort;
+    console.log(filter, sort);
+    if (filter !== "undefined" && ctx.query.id !== "undefined") {
+      if (filter === "topic" || filter === "undefined") {
+        if (sort === "time" || sort === "undefined") {
+          questions = await Question.find({ topic: ctx.query.id })
+            .populate("creator")
+            .sort({ createdAt: -1 });
+        } else if (sort === "hot") {
+          questions = await Question.find({ topic: ctx.query.id })
+            .populate("creator")
+            .sort({ like: -1 });
+        }
+      } else if (filter === "creator") {
         questions = await Question.find({ creator: ctx.query.id })
           .populate("creator")
           .sort({ createdAt: -1 });
       }
     } else {
-      questions = await Question.find().populate("creator").sort({ createdAt: -1 });
+      if (sort === "time" || sort === "undefined") {
+        questions = await Question.find()
+          .populate("creator")
+          .sort({ createdAt: -1 });
+      }
+      if (sort === "hot") {
+        questions = await Question.find()
+          .populate("creator")
+          .sort({ like: -1 });
+      }
     }
     ctx.body = questions;
   }
