@@ -8,7 +8,7 @@ class QuestionCtl {
     let questions = [];
     const filter = ctx.query.filter;
     const sort = ctx.query.sort;
-    console.log(filter, sort);
+    // console.log(filter, sort);
     if (filter !== "undefined" && ctx.query.id !== "undefined") {
       if (filter === "topic" || filter === "undefined") {
         if (sort === "time" || sort === "undefined") {
